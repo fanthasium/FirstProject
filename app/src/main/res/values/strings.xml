@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">FirstProject</string>
+    
+    <string-array name="hobby">
+        <item>음악감상</item>
+        <item>독서</item>
+        <item>웨이트 트레이닝</item>
+        <item>자전거 타기</item>
+        <item>Tv시청</item>
+        <item>우표 수집</item>
+        <item>U-tube</item>
+        <item>낚시</item>
+        <item>익스트림 스포츠</item>
+        <item>블로그 챌린지</item>
+    </string-array>
+</resources>
