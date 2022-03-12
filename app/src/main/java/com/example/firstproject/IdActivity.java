@@ -4,41 +4,54 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.example.firstproject.databinding.ActivityIdPagBinding;
+import com.example.firstproject.databinding.ActivityIdPagBindingImpl;
+import com.example.firstproject.databinding.ActivityPasswordPagBinding;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.regex.Pattern;
 
 
 public class IdActivity extends AppCompatActivity {
-
-    private static final String TAG = "SignUpActivity";
-    private FirebaseAuth mAuth;
-
+    private ActivityIdPagBinding mbinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityIdPagBinding mbinding = DataBindingUtil.setContentView(this, R.layout.activity_id_pag);
-        mbinding.setIdActivity(this);
-        
-        mAuth = FirebaseAuth.getInstance();
-        mAuth.createUserWithEmailAndPassword(email, password)
+        mbinding = DataBindingUtil.setContentView(this, R.layout.activity_id_pag); //데이터 바인딩
+
+        mbinding.setId(this);
+
+
+
     }
 
 
 
+    public void startPwdActivity(View view) {
+         String email = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$";
+        String editText = mbinding.idEditText.getText().toString().trim();
 
-
-
-    //데이터바인딩은 오버라이드 하지않고 바로 메소드로 선언
-    public void nextActivity(View view) {
-        Intent intent = new Intent(IdActivity.this, PwActivity.class);
-        startActivity(intent);
+        if(email.length() > 0 && Pattern.matches(email, editText)){
+            startToast("사용자 아이디가 생성됐습니다");
+                Intent intent = new Intent(IdActivity.this, PwActivity.class);
+                intent.putExtra("email",editText);
+                startActivity(intent);
+            }else {
+            startToast("잘못된 표현: 올바른 정규식으로 입력해주세요");
+        }
     }
 
+
+    private void startToast(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
 
 }
 
