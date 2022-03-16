@@ -6,7 +6,7 @@
     <data>
         <variable
             name="cardView"
-            type="com.example.firstproject.InfoAdapter" />  //main activity가 맞나?.. 데이터만 넣어줄건데
+            type="com.example.firstproject.RcyViewAdapter" />  //main activity가 맞나?.. 데이터만 넣어줄건데
 
     </data>
 
@@ -29,24 +29,36 @@
             tools:layout_editor_absoluteY="0dp">
 
             <TextView
-                android:id="@+id/getEmailTxtView"
+                android:id="@+id/emailTxtView"
+                android:layout_height="60dp"
+                android:layout_margin="10dp"
                 android:layout_width="match_parent"
+                android:text="@{cardView.email}"
                 android:layout_gravity="top"
                 android:gravity="center"
                 android:textStyle="bold"
-                android:text="@{cardView.getEmail}"  <!-- 데이터 가져오기 -->
-                android:layout_height="60dp"
-                android:layout_margin="10dp" />
+                />
 
             <TextView
-                android:id="@+id/getMkTimeTxtView"
+                android:id="@+id/mkTimeTxtView"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:textStyle="bold"
-                android:text="@{cardView.getMkTime}"  <!-- 데이터 가져오기 -->
+                 />
+
+            <TextView
+                android:id="@+id/orderTxtView"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_margin="10dp" />
+                android:layout_margin="10dp"
+                android:layout_gravity="bottom"
+                android:gravity="center"
+                android:textStyle="bold"
+               />
+
 
         </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>

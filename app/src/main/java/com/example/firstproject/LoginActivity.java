@@ -12,8 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.example.firstproject.databinding.ActivityLoginBinding;
-import com.example.firstproject.databinding.ActivityLoginBindingImpl;
-import com.example.firstproject.databinding.ActivityUserinfoPagBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;

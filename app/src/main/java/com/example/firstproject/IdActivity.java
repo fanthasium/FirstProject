@@ -14,12 +14,18 @@ import com.example.firstproject.databinding.ActivityIdPagBinding;
 import com.example.firstproject.databinding.ActivityIdPagBindingImpl;
 import com.example.firstproject.databinding.ActivityPasswordPagBinding;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.regex.Pattern;
 
 
 public class IdActivity extends AppCompatActivity {
     private ActivityIdPagBinding mbinding;
+
+
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private DatabaseReference databaseReference = database.getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,15 +34,16 @@ public class IdActivity extends AppCompatActivity {
 
         mbinding.setId(this);
 
-
-
     }
 
 
 
     public void startPwdActivity(View view) {
+
+         String editText = mbinding.idEditText.getText().toString().trim();
+         databaseReference.child("user info").child("email").setValue(editText);
+
          String email = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$";
-        String editText = mbinding.idEditText.getText().toString().trim();
 
         if(email.length() > 0 && Pattern.matches(email, editText)){
             startToast("사용자 아이디가 생성됐습니다");
