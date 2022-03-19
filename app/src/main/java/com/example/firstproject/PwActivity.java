@@ -12,6 +12,8 @@ import androidx.databinding.DataBindingUtil;
 
 import com.example.firstproject.databinding.ActivityPasswordPagBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,6 +22,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.regex.Pattern;
 
 public class PwActivity extends AppCompatActivity {
@@ -50,6 +53,13 @@ public class PwActivity extends AppCompatActivity {
       String password = mbinding.pwEditText.getText().toString();
       String passwordCheck = mbinding.pwCheckEditText.getText().toString();
 
+     Date mkDate = new Date(System.currentTimeMillis()); //날짜
+
+     //데이터 입력 hashmap 만들기
+     HashMap<Object, Object> result = new HashMap<>();
+     result.put("email", email);
+     result.put("mkDate",mkDate);
+
       String passwordRge = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[~!@#$%^&*()+|=])[A-Za-z\\d~!@#$%^&*()+|=]{8,19}";
 
    if (password.equals(passwordCheck) && Pattern.matches(passwordRge, password)) {  //수정 : 8자이상 대소문자..알림 뜨게
@@ -64,7 +74,7 @@ public class PwActivity extends AppCompatActivity {
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 startToast("회원가입을 성공하였습니다");
                                 Intent intent = new Intent(PwActivity.this, UserInfoActivity.class);
-                                makeNewId();
+                                writeNewUser("1",email,mkDate);
                                 startActivity(intent);
                                 //UI
 
@@ -88,13 +98,26 @@ public class PwActivity extends AppCompatActivity {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
-    // 가입일 등록
-    void makeNewId()
-    {
-        Date date = new Date(System.currentTimeMillis()); //날짜
+    //firbase에 데이터 추가 메서드
+    private void writeNewUser(String userId, String email, Date mkDate) {
+        UserData userData = new UserData(email, mkDate);
 
-        databaseReference.child("user info").child("가입일").setValue(date.toString());
-        //users를 가리키는 기본 참조에서 시작 -> child(Id를 key로 가지는 자식) ->child("가입일 이라는 key를 갖는 자식")의 value를 날짜로 저장
+        databaseReference.child("user info").child(userId).setValue(userData)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        // Write was successful!
+                        Toast.makeText(PwActivity.this, "저장을 완료했습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Write failed
+                        Toast.makeText(PwActivity.this, "저장을 실패했습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
     }
 
 }

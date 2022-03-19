@@ -31,9 +31,10 @@
             <TextView
                 android:id="@+id/emailTxtView"
                 android:layout_height="60dp"
+                android:text="사용자 이메일"
+                android:textAlignment="center"
                 android:layout_margin="10dp"
                 android:layout_width="match_parent"
-                android:text="@{cardView.email}"
                 android:layout_gravity="top"
                 android:gravity="center"
                 android:textStyle="bold"
@@ -42,22 +43,14 @@
             <TextView
                 android:id="@+id/mkTimeTxtView"
                 android:layout_width="match_parent"
+                android:text="사용자 계정 만든 일자"
+                android:textAlignment="center"
                 android:layout_height="50dp"
                 android:layout_margin="10dp"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:textStyle="bold"
                  />
-
-            <TextView
-                android:id="@+id/orderTxtView"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_margin="10dp"
-                android:layout_gravity="bottom"
-                android:gravity="center"
-                android:textStyle="bold"
-               />
 
 
         </androidx.cardview.widget.CardView>

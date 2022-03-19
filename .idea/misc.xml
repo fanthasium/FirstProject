@@ -14,8 +14,10 @@
         <entry key="app/src/main/res/layout/activity_password_pag.xml" value="0.15819209039548024" />
         <entry key="app/src/main/res/layout/activity_register_pag.xml" value="0.4462962962962963" />
         <entry key="app/src/main/res/layout/activity_registerpage.xml" value="0.2390625" />
-        <entry key="app/src/main/res/layout/activity_userinfo_pag.xml" value="0.29541864139020535" />
+        <entry key="app/src/main/res/layout/activity_userinfo_pag.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/dialog_birth.xml" value="0.11458333333333333" />
         <entry key="app/src/main/res/layout/dialog_birthday.xml" value="0.30052083333333335" />
+        <entry key="app/src/main/res/layout/dialog_date.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_main_activity.xml" value="0.21052631578947367" />
       </map>
     </option>

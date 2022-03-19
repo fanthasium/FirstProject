@@ -2,25 +2,30 @@ package com.example.firstproject;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.firstproject.databinding.ItemMainActivityBinding;
+import com.google.firebase.firestore.auth.User;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 
 public class RcyViewAdapter extends RecyclerView.Adapter<RcyViewAdapter.ViewHolder> {
 
-    private ArrayList<UserData> list;
+    private ArrayList<UserData> arrayList;
     private Context context;
 
-    public RcyViewAdapter(ArrayList<UserData> list, Context context) {
-        this.list = list;
+    public RcyViewAdapter(ArrayList<UserData> arrayList, Context context) {
+        this.arrayList = arrayList;
         this.context = context;
     }
 
@@ -37,27 +42,25 @@ public class RcyViewAdapter extends RecyclerView.Adapter<RcyViewAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Glide.with(holder.itemView);
-        holder.mbinding.emailTxtView.setText(list.get(position).getEmail());
-        holder.mbinding.mkTimeTxtView.setText(String.valueOf(list.get(position).getMkDate()));
-        //holder.mbinding.mkTimeTxtView.setText(list.get(position).getorder());
 
+
+        holder.mbinding.emailTxtView.setText(arrayList.get(position).getEmail());
+        holder.mbinding.mkTimeTxtView.setText((CharSequence) arrayList.get(position).getMkDate());
+        //holder.mbinding.mkTimeTxtView.setText(arrayList.get(position).getorder());
     }
 
     @Override
     public int getItemCount() {
         //삼항연산자
-        return (list != null ? list.size() : 0);
+        return (arrayList != null ? arrayList.size() : 0);
     }
-
     public class ViewHolder extends  RecyclerView.ViewHolder{
 
-        private ItemMainActivityBinding mbinding;
+        ItemMainActivityBinding mbinding;
 
         public ViewHolder(@NonNull ItemMainActivityBinding mbinding) {
             super(mbinding.getRoot());
             this.mbinding = mbinding;
-
         }
     }
 

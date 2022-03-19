@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.example.firstproject.databinding.ActivityIdPagBinding;
-import com.example.firstproject.databinding.ActivityIdPagBindingImpl;
 import com.example.firstproject.databinding.ActivityPasswordPagBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;

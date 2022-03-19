@@ -6,7 +6,7 @@
 
     <data>
         <variable
-            name="userInfoActivity"
+            name="userInfo"
             type="com.example.firstproject.UserInfoActivity" />
     </data>
 
@@ -97,44 +97,47 @@
 
     <EditText
         android:id="@+id/phoneNumEditText"
-        android:layout_width="222dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_width="238dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="25dp"
         android:hint="전화번호를 입력해주세요"
         android:inputType="phone"
         android:maxLength="13"
-        android:textSize="12sp"
+        android:textAlignment="center"
+        android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.036"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnBirthday" />
+        app:layout_constraintTop_toBottomOf="@+id/birthdayTxtview" />
 
-    <Button
-        android:id="@+id/btnBirthday"
+    <TextView
+        android:id="@+id/birthdayTxtview"
         style="?android:spinnerStyle"
-        android:layout_width="224dp"
-        android:layout_height="43dp"
-        android:layout_marginTop="20dp"
-        android:hint="생년월일을 입력해주세요"
-        android:onClick="showDatePickerDialog"
+        android:layout_width="250dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="25dp"
+        android:hint="생년월일을 입력해 주세요"
+        android:onClick="@{userInfo::showDatePickerDialog}"
+        android:textAlignment="center"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.053"
+        app:layout_constraintHorizontal_bias="0.167"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/genderRadioGroup" />
 
-
-    <Button
-        android:id="@+id/btnHobby"
+    <TextView
+        android:id="@+id/hobbyTxtview"
         style="?android:spinnerStyle"
-        android:layout_width="224dp"
-        android:layout_height="43dp"
-        android:layout_marginTop="20dp"
+        android:layout_width="250dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="25dp"
         android:hint="취미를 입력해주세요"
+        android:textAlignment="center"
+        android:onClick="@{userInfo::showDialog}"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.053"
+        app:layout_constraintHorizontal_bias="0.144"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/phoneNumEditText" />
 
@@ -145,7 +148,7 @@
         android:layout_marginTop="120dp"
         android:layout_marginBottom="16dp"
         android:text="다음"
-        android:onClick="@{userInfoActivity::nextActivity}"
+        android:onClick="@{userInfo::nextActivity}"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/genderRadioGroup"
         app:layout_constraintVertical_bias="0.831"

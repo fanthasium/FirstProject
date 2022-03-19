@@ -3,60 +3,59 @@ package com.example.firstproject;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.databinding.ObservableArrayList;
+
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import android.accounts.Account;
+
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 
-import com.example.firstproject.databinding.ActivityIdPagBinding;
+
 import com.example.firstproject.databinding.ActivityMainBinding;
-import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.database.core.SnapshotHolder;
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class MainActivity extends AppCompatActivity {
-   private ActivityMainBinding mbinding;
-   private FirebaseDatabase database;
-   private DatabaseReference databaseReference;
-   private ArrayList<UserData> arrayList;
+    private ArrayList<UserData> arrayList;
    private RecyclerView.Adapter adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mbinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        ActivityMainBinding mbinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+
+        RecyclerView recyclerView = mbinding.rcyView;
 
 
-
-
-        database = FirebaseDatabase.getInstance(); //firebase database 연동
-        databaseReference = database.getReference("user info");
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(recyclerView.getLayoutManager());
         arrayList = new ArrayList<>();
 
+        FirebaseDatabase database = FirebaseDatabase.getInstance(); //firebase database 연동
+        DatabaseReference databaseReference = database.getReference("user info");
+
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            private Object UserData;
+
+
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 //파이어베이스 데이터 가져오는 곳
                 arrayList.clear(); //기존 배열리스트 존재하지 않게 초기화
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    UserData data = snapshot.getValue(UserData.class);  //만들어둔 data class 객체에 담기
-                    arrayList.add((com.example.firstproject.UserData) UserData);  //담은 데이터 배열리스트에 넣고 리사이클러뷰에 옮겨줄거임
-                }
+                UserData userData = dataSnapshot.getValue(UserData.class); //만들어둔 data class 객체에 담기
+                    arrayList.add(userData);  //담은 데이터 배열리스트에 넣고 어텝터에 옮겨줄거임
                 adapter.notifyDataSetChanged();
 
             }
@@ -67,11 +66,14 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("mainActivity", String.valueOf(databaseError.toException()));
             }
         });
-
-        adapter = new RcyViewAdapter(arrayList, this);
+        adapter = new RcyViewAdapter(arrayList,this);
         mbinding.rcyView.setAdapter(adapter);
-        mbinding.rcyView.setLayoutManager(new GridLayoutManager(this, 2));
+
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
+        recyclerView.setLayoutManager(mLayoutManager);
+
     }
+    
 }
 
 
