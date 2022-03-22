@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <data>
+        <variable
+            name="accountinfo"
+            type="com.example.firstproject.AccountInfoActivity" />
+
+    </data>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/nameTxtView"
+        android:layout_width="232dp"
+        android:layout_height="67dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="이름"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.089"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/genderTxtView"
+        android:layout_width="232dp"
+        android:layout_height="67dp"
+        android:layout_marginTop="24dp"
+        android:gravity="center"
+        android:text="성별"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/nameTxtView"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameTxtView" />
+
+    <TextView
+        android:id="@+id/birthTxtView"
+        android:layout_width="232dp"
+        android:layout_height="67dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="생년월일"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/genderTxtView"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/genderTxtView" />
+
+
+    <TextView
+        android:id="@+id/phoneNumTxtView"
+        android:layout_width="232dp"
+        android:layout_height="67dp"
+        android:layout_marginTop="40dp"
+        android:gravity="center"
+        android:text="전화번호"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/birthTxtView"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/birthTxtView" />
+
+    <TextView
+        android:id="@+id/hobbyTxtView"
+        android:layout_width="232dp"
+        android:layout_height="67dp"
+        android:layout_marginTop="48dp"
+        android:gravity="center"
+        android:text="취미"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/phoneNumTxtView"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/phoneNumTxtView"
+        app:layout_constraintVertical_bias="0.0" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

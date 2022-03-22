@@ -1,10 +1,12 @@
 package com.example.firstproject;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -37,6 +39,7 @@ public class RcyViewAdapter extends RecyclerView.Adapter<RcyViewAdapter.ViewHold
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         ItemMainActivityBinding mbinding = DataBindingUtil.inflate(inflater,R.layout.item_main_activity, parent,false);
+        mbinding.setCardView(this);
         return new ViewHolder(mbinding);
     }
 
@@ -61,7 +64,15 @@ public class RcyViewAdapter extends RecyclerView.Adapter<RcyViewAdapter.ViewHold
         public ViewHolder(@NonNull ItemMainActivityBinding mbinding) {
             super(mbinding.getRoot());
             this.mbinding = mbinding;
-        }
-    }
+            }
 
+    }
+        public void nextInfoAccount(View view) {
+            Intent intent = new Intent(view.getContext(), AccountInfoActivity.class);
+            view.getContext().startActivity(intent);
+            Toast.makeText(context, "touch", Toast.LENGTH_SHORT).show();
+    }
 }
+
+
+

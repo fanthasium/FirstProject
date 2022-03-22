@@ -6,25 +6,32 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.telephony.PhoneNumberFormattingTextWatcher;
+import android.telephony.PhoneNumberUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CalendarView;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.DialogFragment;
+import androidx.databinding.adapters.RadioGroupBindingAdapter;
 
 import com.example.firstproject.databinding.ActivityUserinfoPagBinding;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
-import org.w3c.dom.CDATASection;
+import org.w3c.dom.Text;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -35,8 +42,8 @@ import java.util.Locale;
 
 public class UserInfoActivity extends AppCompatActivity {
     private ActivityUserinfoPagBinding mbinding;
-    private DatabaseReference databaseReference;
-
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private DatabaseReference databaseReference = database.getReference();
 
     AlertDialog.Builder builder;
     List<String> selectItem;
@@ -47,61 +54,74 @@ public class UserInfoActivity extends AppCompatActivity {
         mbinding = DataBindingUtil.setContentView(this, R.layout.activity_userinfo_pag);
         mbinding.setUserInfo(this);
 
-
-
     }
 
     public void nextActivity(View view) {
-        String name = mbinding.nameEditText.getText().toString();     //Name
 
-        final RadioGroup radioGroup = mbinding.genderRadioGroup;      //Gender
-        int gender = radioGroup.getCheckedRadioButtonId();
+        String name = mbinding.nameEditText.getText().toString().trim();
+        String gender = getGender(view).trim();
+        String birth = mbinding.birthdayTxtview.getText().toString().trim();
+        String phoneNum = mbinding.phoneNumEditText.getText().toString().trim();
+        String hobby = mbinding.hobbyTxtview.getText().toString().trim();
 
-        String birth  = mbinding.birthdayTxtview.getText().toString();      //birth
-        String number = mbinding.phoneNumEditText.getText().toString();   //Number
-        String hobby  = mbinding.hobbyTxtview.getText().toString();                                                             //hobby
-
+        addAccountInfo(name,gender,birth,phoneNum,hobby);
         Intent intent = new Intent(UserInfoActivity.this, MainActivity.class);
-        intent.putExtra("name", name);
-        intent.putExtra("gender", gender);
-        intent.putExtra("birth", birth);
-        intent.putExtra("number", number);
-        intent.putExtra("hobby", hobby);
         startActivity(intent);
+
     }
 
+
+    public void addAccountInfo(String name, String gender, String birth, String phoneNum, String hobby) {
+        AccountData accountData = new AccountData(name,gender,birth,phoneNum,hobby);
+        databaseReference.child("account info").child(name).setValue(accountData);
+    }
+
+    //gender RaidoGroup
+    public String getGender(View view){
+        RadioButton male = mbinding.rgbtnMale;
+        RadioButton female = mbinding.rgbtnFemale;
+        String gender = null;
+        if(male.isChecked()){
+            gender = male.getText().toString();
+        }else if(female.isChecked()){
+            gender = female.getText().toString();
+        }
+        return gender;
+    }
+
+
     //birth dialog
-  public void showDatePickerDialog (View view){
+  public void showDatePickerDialog (View view) {
       Calendar c = Calendar.getInstance();
 
       DatePickerDialog datePickerDialog = new DatePickerDialog(UserInfoActivity.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth, new DatePickerDialog.OnDateSetListener() {
           @Override
           public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-              // TODO Auto-generated method stub
+
               try {
-                  Date d = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(year+"-"+(monthOfYear+1)+"-"+dayOfMonth);
+                  TextView birth = mbinding.birthdayTxtview;
+                  birth.setText(String.format("%d - %d - %d", year,monthOfYear+1,dayOfMonth));
+
               } catch (Exception e) {
                   e.printStackTrace();
               }
           }
       }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
-
       datePickerDialog.getDatePicker().setCalendarViewShown(false);
       datePickerDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
       datePickerDialog.show();
-    }
+  }
 
-    //Hobby
-
-    public void showDialog(View view) {
+    //Hobby dialog
+  public void showDialog(View view) {
         selectItem = new ArrayList<>();
         builder = new AlertDialog.Builder(UserInfoActivity.this);
         builder.setMultiChoiceItems(R.array.hobby, null, new DialogInterface.OnMultiChoiceClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int which, boolean checked) {
+            public void onClick(DialogInterface dialogInterface, int which, boolean isChecked) {
                 String[] items = getResources().getStringArray(R.array.hobby);
 
-                if (checked) {
+                if (isChecked) {
                     selectItem.add(items[which]);
                 } else if (selectItem.contains(items[which])) {
                     selectItem.remove(items[which]);
@@ -110,12 +130,25 @@ public class UserInfoActivity extends AppCompatActivity {
             }
         });
 
-        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int which) {
+                String[] items = getResources().getStringArray(R.array.hobby);
+                TextView checkBox = mbinding.hobbyTxtview;
+                String selection = "";
+                for(String item : selectItem){
+                    selection = selection + item + " , ";
+                    checkBox.setText(selection);
+                }
+
                 Toast.makeText(getApplicationContext(), "선택 됐습니다", Toast.LENGTH_SHORT).show();
+
             }
         });
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
     }
+
+
 }
 

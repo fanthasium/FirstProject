@@ -9,10 +9,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
+import android.view.View;
 
 
 import com.example.firstproject.databinding.ActivityMainBinding;
@@ -28,7 +29,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private ArrayList<UserData> arrayList;
-   private RecyclerView.Adapter adapter;
+    private RecyclerView.Adapter adapter;
 
 
     @Override
@@ -43,7 +44,8 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(recyclerView.getLayoutManager());
         arrayList = new ArrayList<>();
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance(); //firebase database 연동
+//firebase database 연동
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = database.getReference("user info");
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {

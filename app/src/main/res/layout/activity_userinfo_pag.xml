@@ -69,7 +69,7 @@
         app:layout_constraintTop_toBottomOf="@+id/nameEditText">
 
         <RadioButton
-            android:id="@+id/rgbtn1"
+            android:id="@+id/rgbtnMale"
             android:layout_width="85dp"
             android:layout_height="43dp"
             android:layout_marginTop="12dp"
@@ -80,7 +80,7 @@
             app:layout_constraintTop_toBottomOf="@+id/editText" />
 
         <RadioButton
-            android:id="@+id/rgbtn2"
+            android:id="@+id/rgbtnFemale"
             android:layout_width="85dp"
             android:layout_height="40dp"
             android:layout_marginTop="12dp"
@@ -99,28 +99,27 @@
         android:id="@+id/phoneNumEditText"
         android:layout_width="238dp"
         android:layout_height="60dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="25dp"
-        android:hint="전화번호를 입력해주세요"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="48dp"
+        android:hint="\t  \t 전화번호를 입력해주세요"
         android:inputType="phone"
-        android:maxLength="13"
-        android:textAlignment="center"
+        android:maxLength="11"
         android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.036"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/birthdayTxtview" />
 
     <TextView
         android:id="@+id/birthdayTxtview"
         style="?android:spinnerStyle"
-        android:layout_width="250dp"
+        android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_marginTop="25dp"
-        android:hint="생년월일을 입력해 주세요"
+        android:layout_marginStart="20dp"
+        android:hint="\t      생년월일을 입력해 주세요"
         android:onClick="@{userInfo::showDatePickerDialog}"
-        android:textAlignment="center"
-        android:textSize="12sp"
+        android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.167"
         app:layout_constraintStart_toStartOf="parent"
@@ -129,15 +128,15 @@
     <TextView
         android:id="@+id/hobbyTxtview"
         style="?android:spinnerStyle"
-        android:layout_width="250dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="25dp"
-        android:hint="취미를 입력해주세요"
-        android:textAlignment="center"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="64dp"
+        android:hint="\t   \t   취미를 입력해주세요"
         android:onClick="@{userInfo::showDialog}"
-        android:textSize="12sp"
+        android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.144"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/phoneNumEditText" />
 

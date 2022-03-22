@@ -15,7 +15,7 @@
         android:theme="@style/Theme.FirstProject"
         tools:targetApi="p">
         <activity
-            android:name=".MainActivity"
+            android:name=".AccountInfoActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,11 +27,11 @@
 
 
         <activity
-            android:name=".PwActivity">
+            android:name=".IdActivity">
         </activity>
 
         <activity
-            android:name=".UserInfoActivity">
+            android:name=".MainActivity">
         </activity>
 
         <activity
@@ -39,7 +39,11 @@
         </activity>
 
         <activity
-            android:name=".IdActivity">
+            android:name=".PwActivity">
+        </activity>
+
+        <activity
+            android:name=".UserInfoActivity">
         </activity>
 
 

@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.example.firstproject.databinding.ActivityPasswordPagBinding;
+import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -99,26 +100,28 @@ public class PwActivity extends AppCompatActivity {
     }
 
     //firbase에 데이터 추가 메서드
-    private void writeNewUser(String userId, String email, Date mkDate) {
+    private void writeNewUser(String userOrder, String email, Date mkDate) {
         UserData userData = new UserData(email, mkDate);
 
-        databaseReference.child("user info").child(userId).setValue(userData)
+        databaseReference.child("user info").child(userOrder).setValue(userData)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         // Write was successful!
-                        Toast.makeText(PwActivity.this, "저장을 완료했습니다.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PwActivity.this, "가입을 완료했습니다.", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         // Write failed
-                        Toast.makeText(PwActivity.this, "저장을 실패했습니다.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PwActivity.this, "가입을 실패했습니다.", Toast.LENGTH_SHORT).show();
+
                     }
                 });
 
     }
+
 
 }
 
