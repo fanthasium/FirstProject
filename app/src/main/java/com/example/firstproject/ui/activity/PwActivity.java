@@ -1,4 +1,4 @@
-package com.example.firstproject;
+package com.example.firstproject.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,8 +10,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import com.example.firstproject.FirstApplication;
+import com.example.firstproject.R;
+import com.example.firstproject.data.UserData;
 import com.example.firstproject.databinding.ActivityPasswordPagBinding;
-import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -22,8 +24,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 public class PwActivity extends AppCompatActivity {
@@ -41,8 +44,7 @@ public class PwActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mbinding = DataBindingUtil.setContentView(this, R.layout.activity_password_pag); //데이터 바인딩
         mbinding.setPw(this);
-
-
+        database.getReference();
         mAuth = FirebaseAuth.getInstance();
 
     }
@@ -54,18 +56,15 @@ public class PwActivity extends AppCompatActivity {
       String password = mbinding.pwEditText.getText().toString();
       String passwordCheck = mbinding.pwCheckEditText.getText().toString();
 
-     Date mkDate = new Date(System.currentTimeMillis()); //날짜
-
-     //데이터 입력 hashmap 만들기
-     HashMap<Object, Object> result = new HashMap<>();
-     result.put("email", email);
-     result.put("mkDate",mkDate);
+     Date today = new Date();
+     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN);
+     String mkDate = simpleDateFormat.format(today);
 
       String passwordRge = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[~!@#$%^&*()+|=])[A-Za-z\\d~!@#$%^&*()+|=]{8,19}";
 
-   if (password.equals(passwordCheck) && Pattern.matches(passwordRge, password)) {  //수정 : 8자이상 대소문자..알림 뜨게
+   if (password.equals(passwordCheck) && Pattern.matches(passwordRge, password)) {
 
-            mAuth.createUserWithEmailAndPassword(String.valueOf(email), password)   //전에 email 과 password 값 파이어베이스로
+            mAuth.createUserWithEmailAndPassword(String.valueOf(email), password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
@@ -75,7 +74,7 @@ public class PwActivity extends AppCompatActivity {
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 startToast("회원가입을 성공하였습니다");
                                 Intent intent = new Intent(PwActivity.this, UserInfoActivity.class);
-                                writeNewUser("1",email,mkDate);
+                                writeNewUser("first",email,mkDate);
                                 startActivity(intent);
                                 //UI
 
@@ -100,7 +99,7 @@ public class PwActivity extends AppCompatActivity {
     }
 
     //firbase에 데이터 추가 메서드
-    private void writeNewUser(String userOrder, String email, Date mkDate) {
+    private void writeNewUser(String userOrder, String email, String mkDate) {
         UserData userData = new UserData(email, mkDate);
 
         databaseReference.child("user info").child(userOrder).setValue(userData)

@@ -8,7 +8,7 @@
     <data>
         <variable
             name="id"
-            type="com.example.firstproject.IdActivity"/>
+            type="com.example.firstproject.ui.activity.IdActivity"/>
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout

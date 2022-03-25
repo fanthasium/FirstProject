@@ -7,7 +7,7 @@
     <data>
         <variable
             name="userInfo"
-            type="com.example.firstproject.UserInfoActivity" />
+            type="com.example.firstproject.ui.activity.UserInfoActivity" />
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout

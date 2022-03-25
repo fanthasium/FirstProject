@@ -1,43 +1,28 @@
-package com.example.firstproject;
+package com.example.firstproject.ui.activity;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.telephony.PhoneNumberFormattingTextWatcher;
-import android.telephony.PhoneNumberUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.CalendarView;
-import android.widget.CheckBox;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.databinding.adapters.RadioGroupBindingAdapter;
 
+import com.example.firstproject.R;
+import com.example.firstproject.data.AccountData;
 import com.example.firstproject.databinding.ActivityUserinfoPagBinding;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import org.w3c.dom.Text;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 
 public class UserInfoActivity extends AppCompatActivity {
@@ -58,11 +43,11 @@ public class UserInfoActivity extends AppCompatActivity {
 
     public void nextActivity(View view) {
 
-        String name = mbinding.nameEditText.getText().toString().trim();
-        String gender = getGender(view).trim();
-        String birth = mbinding.birthdayTxtview.getText().toString().trim();
-        String phoneNum = mbinding.phoneNumEditText.getText().toString().trim();
-        String hobby = mbinding.hobbyTxtview.getText().toString().trim();
+        String name = mbinding.nameEditText.getText().toString();
+        String gender = getGender(view);
+        String birth = mbinding.birthdayTxtview.getText().toString();
+        String phoneNum = mbinding.phoneNumEditText.getText().toString();
+        String hobby = mbinding.hobbyTxtview.getText().toString();
 
         addAccountInfo(name,gender,birth,phoneNum,hobby);
         Intent intent = new Intent(UserInfoActivity.this, MainActivity.class);

@@ -1,34 +1,36 @@
-package com.example.firstproject;
+package com.example.firstproject.ui.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.util.Log;
-import android.view.View;
 
 
+import com.example.firstproject.R;
+import com.example.firstproject.ui.adapter.RcyViewAdapter;
+import com.example.firstproject.data.UserData;
 import com.example.firstproject.databinding.ActivityMainBinding;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.auth.User;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
-    private ArrayList<UserData> arrayList;
+    private ArrayList<UserData> List;
     private RecyclerView.Adapter adapter;
 
 
@@ -38,11 +40,10 @@ public class MainActivity extends AppCompatActivity {
         ActivityMainBinding mbinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
         RecyclerView recyclerView = mbinding.rcyView;
-
-
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(recyclerView.getLayoutManager());
-        arrayList = new ArrayList<>();
+
+        List = new ArrayList<>();
 
 //firebase database 연동
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -50,16 +51,18 @@ public class MainActivity extends AppCompatActivity {
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
 
-
-
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 //파이어베이스 데이터 가져오는 곳
-                arrayList.clear(); //기존 배열리스트 존재하지 않게 초기화
-                UserData userData = dataSnapshot.getValue(UserData.class); //만들어둔 data class 객체에 담기
-                    arrayList.add(userData);  //담은 데이터 배열리스트에 넣고 어텝터에 옮겨줄거임
-                adapter.notifyDataSetChanged();
+                List.clear();
+                for(DataSnapshot ds : dataSnapshot.getChildren())           //여러 값을 불러와 하나씩
+                {
+                    Log.e("dd","dd" + ds);
+                    UserData userData = ds.getValue(UserData.class);
+                    List.add(userData);
 
+                }
+                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -68,14 +71,15 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("mainActivity", String.valueOf(databaseError.toException()));
             }
         });
-        adapter = new RcyViewAdapter(arrayList,this);
-        mbinding.rcyView.setAdapter(adapter);
+
+        adapter = new RcyViewAdapter(List,this);
+        recyclerView.setAdapter(adapter);
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(mLayoutManager);
 
     }
-    
+
 }
 
 

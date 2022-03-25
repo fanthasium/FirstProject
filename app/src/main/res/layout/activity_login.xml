@@ -6,7 +6,7 @@
     <data>
         <variable
             name="login"
-            type="com.example.firstproject.LoginActivity" />
+            type="com.example.firstproject.ui.activity.LoginActivity" />
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout

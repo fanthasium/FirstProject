@@ -1,16 +1,16 @@
-package com.example.firstproject;
+package com.example.firstproject.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import com.example.firstproject.R;
 import com.example.firstproject.databinding.ActivityLoginBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -48,7 +48,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();       //바인딩으로 가능한가?
-
     }
 
 
@@ -85,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void startIdActivity(View view){
-        Intent intent = new Intent(LoginActivity.this,IdActivity.class);
+        Intent intent = new Intent(LoginActivity.this, IdActivity.class);
         startActivity(intent);
     }
 }

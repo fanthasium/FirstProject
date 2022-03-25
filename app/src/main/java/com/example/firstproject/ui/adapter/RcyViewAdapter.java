@@ -1,24 +1,24 @@
-package com.example.firstproject;
+package com.example.firstproject.ui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
+import com.example.firstproject.R;
+import com.example.firstproject.data.UserData;
 import com.example.firstproject.databinding.ItemMainActivityBinding;
-import com.google.firebase.firestore.auth.User;
+import com.example.firstproject.ui.activity.AccountInfoActivity;
+import com.google.firebase.database.ValueEventListener;
 
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class RcyViewAdapter extends RecyclerView.Adapter<RcyViewAdapter.ViewHolder> {
@@ -38,7 +38,7 @@ public class RcyViewAdapter extends RecyclerView.Adapter<RcyViewAdapter.ViewHold
 
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        ItemMainActivityBinding mbinding = DataBindingUtil.inflate(inflater,R.layout.item_main_activity, parent,false);
+        ItemMainActivityBinding mbinding = DataBindingUtil.inflate(inflater, R.layout.item_main_activity, parent,false);
         mbinding.setCardView(this);
         return new ViewHolder(mbinding);
     }
@@ -48,8 +48,8 @@ public class RcyViewAdapter extends RecyclerView.Adapter<RcyViewAdapter.ViewHold
 
 
         holder.mbinding.emailTxtView.setText(arrayList.get(position).getEmail());
-        holder.mbinding.mkTimeTxtView.setText((CharSequence) arrayList.get(position).getMkDate());
-        //holder.mbinding.mkTimeTxtView.setText(arrayList.get(position).getorder());
+        holder.mbinding.mkTimeTxtView.setText(arrayList.get(position).getMkDate());
+
     }
 
     @Override

@@ -8,7 +8,7 @@
     <data>
         <variable
             name="accountinfo"
-            type="com.example.firstproject.AccountInfoActivity" />
+            type="com.example.firstproject.ui.activity.AccountInfoActivity" />
 
     </data>
 

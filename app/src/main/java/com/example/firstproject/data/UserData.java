@@ -1,26 +1,29 @@
-package com.example.firstproject;
+package com.example.firstproject.data;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class UserData {
 
-    public Date mkDate;
+    public String mkDate;
     public String email;
 
-    public UserData () {}  //데이터 옮겨짐 !! 중요 !!
+    public UserData () {
+        // Default constructor required for calls to DataSnapshot.getValue(User.class)  데이터 옮겨짐 !! 중요 !!
+    }
 
-    public UserData(String email, Date mkDate) {
-        // Default constructor required for calls to DataSnapshot.getValue(User.class)
+    public UserData(String email, String mkDate) {
         this.mkDate = mkDate;
         this.email = email;
     }
 
 
-    public Date getMkDate() {
+    public String getMkDate() {
         return mkDate;
     }
 
-    public void setMkDate(Date MkDate) {
+    public void setMkDate(String MkDate) {
         this.mkDate = MkDate;
     }
 
