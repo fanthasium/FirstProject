@@ -17,6 +17,7 @@ import androidx.databinding.DataBindingUtil;
 import com.example.firstproject.R;
 import com.example.firstproject.data.AccountData;
 import com.example.firstproject.databinding.ActivityUserinfoPagBinding;
+import com.google.android.gms.auth.api.Auth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 

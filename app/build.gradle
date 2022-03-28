@@ -32,10 +32,18 @@ android {
     viewBinding {
         enabled = true
     }
+    sourceSets {
+        main {
+            assets {
+                srcDirs 'src/main/assets'
+            }
+        }
+    }
 }
 
 dependencies {
 
+    implementation "com.airbnb.android:lottie:5.0.3"
   //파이어 베이스
     implementation platform('com.google.firebase:firebase-bom:29.1.0')
     implementation 'com.google.firebase:firebase-auth'

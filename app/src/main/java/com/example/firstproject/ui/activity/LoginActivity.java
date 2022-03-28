@@ -12,6 +12,7 @@ import androidx.databinding.DataBindingUtil;
 
 import com.example.firstproject.R;
 import com.example.firstproject.databinding.ActivityLoginBinding;
+import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -24,6 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private ActivityLoginBinding mbinding;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         mbinding.setLogin(this);
 
         mAuth = FirebaseAuth.getInstance();
+
     }
 
 

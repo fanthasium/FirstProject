@@ -34,6 +34,7 @@ public class PwActivity extends AppCompatActivity {
     private static final String TAG = "SignUpActivity";
     private FirebaseAuth mAuth;
     private ActivityPasswordPagBinding mbinding;
+    private FirebaseUser user;
 
     //데이터 베이스 연결 메소드
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -46,7 +47,7 @@ public class PwActivity extends AppCompatActivity {
         mbinding.setPw(this);
         database.getReference();
         mAuth = FirebaseAuth.getInstance();
-
+        user = FirebaseAuth.getInstance().getCurrentUser();
     }
 
 
@@ -55,6 +56,8 @@ public class PwActivity extends AppCompatActivity {
       String email = getIntent().getStringExtra("email");
       String password = mbinding.pwEditText.getText().toString();
       String passwordCheck = mbinding.pwCheckEditText.getText().toString();
+
+      String uid = user.getUid();
 
      Date today = new Date();
      SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN);
@@ -74,7 +77,7 @@ public class PwActivity extends AppCompatActivity {
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 startToast("회원가입을 성공하였습니다");
                                 Intent intent = new Intent(PwActivity.this, UserInfoActivity.class);
-                                writeNewUser("first",email,mkDate);
+                                writeNewUser(uid,email,mkDate);
                                 startActivity(intent);
                                 //UI
 
@@ -99,10 +102,10 @@ public class PwActivity extends AppCompatActivity {
     }
 
     //firbase에 데이터 추가 메서드
-    private void writeNewUser(String userOrder, String email, String mkDate) {
+    private void writeNewUser(String uid, String email, String mkDate) {
         UserData userData = new UserData(email, mkDate);
 
-        databaseReference.child("user info").child(userOrder).setValue(userData)
+        databaseReference.child("user info").child(uid).setValue(userData)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

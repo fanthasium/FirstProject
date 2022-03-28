@@ -16,9 +16,12 @@
         android:theme="@style/Theme.FirstProject"
         tools:targetApi="p" >
 
+      <activity
+          android:name=".ui.activity.LoginActivity">
+      </activity>
 
         <activity
-            android:name=".ui.activity.LoginActivity"
+            android:name=".ui.activity.SplashMainActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,8 +30,6 @@
             </intent-filter>
         </activity>
 
-
-        <activity android:name=".ui.activity.SplashMainActivity"/>
         <activity android:name=".ui.activity.AccountInfoActivity" />
         <activity android:name=".ui.activity.IdActivity" />
         <activity android:name=".ui.activity.PwActivity" />

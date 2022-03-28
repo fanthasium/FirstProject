@@ -20,9 +20,6 @@ import java.util.regex.Pattern;
 public class IdActivity extends AppCompatActivity {
     private ActivityIdPagBinding mbinding;
 
-    private FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private DatabaseReference databaseReference = database.getReference();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
