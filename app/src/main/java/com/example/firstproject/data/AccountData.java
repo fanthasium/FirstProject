@@ -1,7 +1,10 @@
 
 package com.example.firstproject.data;
 
-public class AccountData {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class AccountData implements Parcelable {
 
     String name;
     String gender;
@@ -18,6 +21,26 @@ public class AccountData {
         this.phoneNum = phoneNum;
         this.hobby = hobby;
     }
+
+    protected AccountData(Parcel in) {
+        name = in.readString();
+        gender = in.readString();
+        birth = in.readString();
+        phoneNum = in.readString();
+        hobby = in.readString();
+    }
+
+    public static final Creator<AccountData> CREATOR = new Creator<AccountData>() {
+        @Override
+        public AccountData createFromParcel(Parcel in) {
+            return new AccountData(in);
+        }
+
+        @Override
+        public AccountData[] newArray(int size) {
+            return new AccountData[size];
+        }
+    };
 
     public String getName() {
         return name;
@@ -68,6 +91,20 @@ public class AccountData {
                 ", PhoneNum ='" + phoneNum + '\'' +
                 " Hobby='" + hobby + '\'' +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(name);
+        parcel.writeString(gender);
+        parcel.writeString(birth);
+        parcel.writeString(phoneNum);
+        parcel.writeString(hobby);
     }
 }
 

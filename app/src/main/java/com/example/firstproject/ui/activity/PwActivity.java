@@ -10,8 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
-import com.example.firstproject.FirstApplication;
 import com.example.firstproject.R;
+
 import com.example.firstproject.data.UserData;
 import com.example.firstproject.databinding.ActivityPasswordPagBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -37,8 +37,8 @@ public class PwActivity extends AppCompatActivity {
     private FirebaseUser user;
 
     //데이터 베이스 연결 메소드
-    private FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private DatabaseReference databaseReference = database.getReference();
+    private final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private final DatabaseReference databaseReference = database.getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,40 +51,39 @@ public class PwActivity extends AppCompatActivity {
     }
 
 
- public void startInfoNextActivity(View view) {
+    public void startInfoNextActivity(View view) {
 
-      String email = getIntent().getStringExtra("email");
-      String password = mbinding.pwEditText.getText().toString();
-      String passwordCheck = mbinding.pwCheckEditText.getText().toString();
+        String email = getIntent().getStringExtra("email");
+        String password = mbinding.pwEditText.getText().toString();
+        String passwordCheck = mbinding.pwCheckEditText.getText().toString();
 
-      String uid = user.getUid();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN);
+        String mkDate = simpleDateFormat.format(new Date());
 
-     Date today = new Date();
-     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN);
-     String mkDate = simpleDateFormat.format(today);
+        String passwordRge = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[~!@#$%^&*()+|=])[A-Za-z\\d~!@#$%^&*()+|=]{8,19}";
 
-      String passwordRge = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[~!@#$%^&*()+|=])[A-Za-z\\d~!@#$%^&*()+|=]{8,19}";
+        if (password.equals(passwordCheck) && Pattern.matches(passwordRge, password)) {
 
-   if (password.equals(passwordCheck) && Pattern.matches(passwordRge, password)) {
 
             mAuth.createUserWithEmailAndPassword(String.valueOf(email), password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
+
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.e(TAG, "createUserWithEmail:success");
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 startToast("회원가입을 성공하였습니다");
                                 Intent intent = new Intent(PwActivity.this, UserInfoActivity.class);
-                                writeNewUser(uid,email,mkDate);
+                                writeNewUser(email, mkDate);
                                 startActivity(intent);
                                 //UI
 
                             } else {
                                 if (task.getException() != null) {
                                     // If sign in fails, display a message to the user.
-                                    startToast(task.getException().toString());
+                                    Toast.makeText(PwActivity.this, "가입을 실패했습니다.", Toast.LENGTH_SHORT).show();
                                     //UI
                                 }
 
@@ -92,18 +91,25 @@ public class PwActivity extends AppCompatActivity {
                         }
                     });
         } else {
-            startToast("비밀번호가 일치하지 않습니다.");
+            if (!password.equals(passwordCheck)) {
+                startToast("비밀번호가 일치하지 않습니다.");
+            } else if (!Pattern.matches(passwordRge, password)) {
+                startToast("잘못된 표현: 8자 이상 19자 이하의 올바른 정규식으로 입력해주세요");
+            }
         }
     }
 
 
-    private void startToast(String msg){
+    private void startToast(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
     //firbase에 데이터 추가 메서드
-    private void writeNewUser(String uid, String email, String mkDate) {
+
+    public void writeNewUser(String email, String mkDate) {
+
         UserData userData = new UserData(email, mkDate);
+        String uid = user.getUid();
 
         databaseReference.child("user info").child(uid).setValue(userData)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -123,7 +129,5 @@ public class PwActivity extends AppCompatActivity {
                 });
 
     }
-
-
 }
 

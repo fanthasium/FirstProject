@@ -6,8 +6,13 @@
 
 
     <data>
+
         <variable
-            name="accountinfo"
+            name="accountData"
+            type="com.example.firstproject.data.AccountData" />  <!-- 데이터 클래스 참조 -->
+
+        <variable
+            name="activity"
             type="com.example.firstproject.ui.activity.AccountInfoActivity" />
 
     </data>
@@ -16,19 +21,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <TextView
         android:id="@+id/nameTxtView"
         android:layout_width="232dp"
         android:layout_height="67dp"
         android:layout_marginTop="16dp"
         android:gravity="center"
-        android:text="이름"
+        android:text="@{accountData.name}"
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.089"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="이름" />
 
     <TextView
         android:id="@+id/genderTxtView"
@@ -36,7 +43,8 @@
         android:layout_height="67dp"
         android:layout_marginTop="24dp"
         android:gravity="center"
-        android:text="성별"
+        android:text="@{accountData.gender}"
+        tools:text="성"
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/nameTxtView"
@@ -50,7 +58,8 @@
         android:layout_height="67dp"
         android:layout_marginTop="20dp"
         android:gravity="center"
-        android:text="생년월일"
+        android:text="@{accountData.birth}"
+        tools:text="생일"
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/genderTxtView"
@@ -65,7 +74,8 @@
         android:layout_height="67dp"
         android:layout_marginTop="40dp"
         android:gravity="center"
-        android:text="전화번호"
+        android:text="@{accountData.phoneNum}"
+        tools:text="번호"
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/birthTxtView"
@@ -79,7 +89,8 @@
         android:layout_height="67dp"
         android:layout_marginTop="48dp"
         android:gravity="center"
-        android:text="취미"
+        android:text="@{accountData.hobby}"
+        tools:text="취미"
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"

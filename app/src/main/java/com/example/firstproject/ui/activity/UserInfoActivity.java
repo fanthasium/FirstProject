@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.RadioButton;
@@ -16,13 +17,17 @@ import androidx.databinding.DataBindingUtil;
 
 import com.example.firstproject.R;
 import com.example.firstproject.data.AccountData;
+
 import com.example.firstproject.databinding.ActivityUserinfoPagBinding;
 import com.google.android.gms.auth.api.Auth;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -33,12 +38,15 @@ public class UserInfoActivity extends AppCompatActivity {
 
     AlertDialog.Builder builder;
     List<String> selectItem;
+    private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mbinding = DataBindingUtil.setContentView(this, R.layout.activity_userinfo_pag);
         mbinding.setUserInfo(this);
+        user = FirebaseAuth.getInstance().getCurrentUser();
+
 
     }
 
@@ -51,15 +59,25 @@ public class UserInfoActivity extends AppCompatActivity {
         String hobby = mbinding.hobbyTxtview.getText().toString();
 
         addAccountInfo(name,gender,birth,phoneNum,hobby);
+
         Intent intent = new Intent(UserInfoActivity.this, MainActivity.class);
         startActivity(intent);
 
-    }
 
+
+    }
 
     public void addAccountInfo(String name, String gender, String birth, String phoneNum, String hobby) {
         AccountData accountData = new AccountData(name,gender,birth,phoneNum,hobby);
-        databaseReference.child("account info").child(name).setValue(accountData);
+
+        String uid = user.getUid();
+
+        HashMap<Object,Object> map = new HashMap<>();
+        map.put("uid",accountData);
+
+        Log.e("log", "log\t" + uid);
+
+        databaseReference.child("account info").child(uid).setValue(accountData);
     }
 
     //gender RaidoGroup
@@ -134,6 +152,7 @@ public class UserInfoActivity extends AppCompatActivity {
             AlertDialog alertDialog = builder.create();
             alertDialog.show();
     }
+
 
 
 }

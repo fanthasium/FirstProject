@@ -12,7 +12,6 @@ import androidx.databinding.DataBindingUtil;
 
 import com.example.firstproject.R;
 import com.example.firstproject.databinding.ActivityLoginBinding;
-import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -21,21 +20,20 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private static final  String TAG = "LoginActivity";
+    private static final String TAG = "LoginActivity";
     private FirebaseAuth mAuth;
-    private ActivityLoginBinding mbinding;
+    private ActivityLoginBinding mBinding;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mbinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
-        mbinding.setLogin(this);
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
+        mBinding.setLogin(this);
 
         mAuth = FirebaseAuth.getInstance();
 
     }
-
 
 
     @Override
@@ -43,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
+        if (currentUser != null) {
             currentUser.reload();
         }
     }
@@ -54,12 +52,12 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    public void startMainActivity(View view){      // public으로 하면 보안에 위협이있나?
+    public void startMainActivity(View view) {      // public으로 하면 보안에 위협이있나?
 
-        String email = mbinding.editEmail.getText().toString().trim();
-        String password = mbinding.editPwd.getText().toString().trim();
+        String email = mBinding.editEmail.getText().toString().trim();
+        String password = mBinding.editPwd.getText().toString().trim();
 
-        if(email.length() > 0 && password.length() > 0) {
+        if (email.length() > 0 && password.length() > 0) {
 
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -70,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
                                 Log.d(TAG, "signInWithEmail:success");
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 startToast("로그인에 성공하였습니다");
-                                Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(intent);
                             } else {
                                 // If sign in fails, display a message to the user.
@@ -82,11 +80,12 @@ public class LoginActivity extends AppCompatActivity {
             startToast("아이디 or 비밀번호를 입력해 주세요.");
         }
     }
+
     private void startToast(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
-    public void startIdActivity(View view){
+    public void startIdActivity(View view) {
         Intent intent = new Intent(LoginActivity.this, IdActivity.class);
         startActivity(intent);
     }
